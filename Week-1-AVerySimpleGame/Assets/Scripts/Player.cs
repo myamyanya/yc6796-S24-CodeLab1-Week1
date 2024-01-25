@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody rb;
     public float forceAmount = 5;
+    public float maxVelocity = 10;
     
     // For Jumping
     public float jumpForceAmount = 0.1f;
@@ -63,5 +64,20 @@ public class Player : MonoBehaviour
                 isJumping = false;
             }
         }
+        
+        // Control the velocity of the player's movement
+        if (rb.velocity.magnitude > maxVelocity)
+        {
+            // normalized --> only keep the direction of a vector
+            Vector3 newVelocity = rb.velocity.normalized;
+            
+            // add magnitude to the vector
+            newVelocity *= maxVelocity;
+            
+            // apply the new velocity to player
+            rb.velocity = newVelocity;
+        }
+        
+        Debug.Log(rb.velocity.magnitude);
     }
 }
